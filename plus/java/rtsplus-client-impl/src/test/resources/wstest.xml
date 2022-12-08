@@ -5,23 +5,23 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-        
+
 	<bean id="rtsplusFactory" class="org.iru.rtsplus.client.ClientFactoryBuilder" factory-method="newInstance">
 		<property name="outgoingCertificate" ref="signingCertificateDER"/>
 		<property name="outgoingKey" ref="signingKeyDER"/>
 		<property name="incomingCertificate" ref="verifyingCertificateDER"/>
-	</bean> 
-			
+	</bean>
+
 	<bean id="signingCertificateDER" class="org.iru.rtsplus.test.FileUtils" factory-method="loadFileInClasspath">
-		<constructor-arg><value>RSA_2048_test_RTS+_OUTGOING_2014012234.cer.der</value></constructor-arg>
+		<constructor-arg><value>RSA_2048_TEST_RTS+_OUTGOING_20221207122249.cer.der</value></constructor-arg>
 	</bean>
 	<bean id="signingKeyDER" class="org.iru.rtsplus.test.FileUtils" factory-method="loadFileInClasspath">
-		<constructor-arg><value>RSA_2048_test_RTS+_OUTGOING_2014012234.key.der</value></constructor-arg>
+		<constructor-arg><value>RSA_2048_TEST_RTS+_OUTGOING_20221207122249.key.der</value></constructor-arg>
 	</bean>
 	<bean id="verifyingCertificateDER" class="org.iru.rtsplus.test.FileUtils" factory-method="loadFileInClasspath">
-		<constructor-arg><value>RSA_2048_test_RTS+_INCOMING_2014012209.cer.der</value></constructor-arg>
+		<constructor-arg><value>RSA_2048_TEST_RTS+_INCOMING_20221207122201.cer.der</value></constructor-arg>
 	</bean>
-		
+
 	<bean factory-bean="rtsplusFactory" factory-method="getCarnetServiceClient" >
 		<constructor-arg>
 			<bean class="java.net.URL">
@@ -29,5 +29,5 @@
 			</bean>
 		</constructor-arg>
 	</bean>
- 
+
 </beans>

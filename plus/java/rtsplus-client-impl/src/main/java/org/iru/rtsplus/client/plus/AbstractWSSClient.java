@@ -54,17 +54,17 @@ import org.apache.ws.security.util.WSSecurityUtil;
 public abstract class AbstractWSSClient  {
 
 	protected static final String WS_ADDRESSING_NAMESPACE  = "http://www.w3.org/2005/08/addressing";
-	
+
 	protected String sender;
-	protected String password; 
+	protected String password;
 	protected URL rtsEndpoint;
-	
+
 	protected String portNameSuffix = "";
 
 	protected RSAPrivateKey signingKey;
 	private X509Certificate signingCertificate;
 	private X509Certificate verifyingCertificate;
-	
+
 	public static X509Certificate loadCertificate(byte[] cert) throws CertificateException {
 		CertificateFactory x509CertFact = CertificateFactory.getInstance("X.509");
 		ByteArrayInputStream in = new ByteArrayInputStream(cert);
@@ -79,11 +79,11 @@ public abstract class AbstractWSSClient  {
 			}
 		}
 	}
-	
+
 	public static String getThumbprint(X509Certificate cert) throws CertificateEncodingException {
 		return DigestUtils.sha1Hex(cert.getEncoded());
 	}
-	
+
 	protected static XMLGregorianCalendar convertToXML(Date d) throws DatatypeConfigurationException  {
 		if (d == null)
 			return null;
@@ -91,7 +91,7 @@ public abstract class AbstractWSSClient  {
 		gCalendar.setTime(d);
 		return DatatypeFactory.newInstance().newXMLGregorianCalendar(gCalendar);
 	}
-	
+
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
@@ -115,26 +115,26 @@ public abstract class AbstractWSSClient  {
 	public void setVerifyingCertificateDER(byte[] verifyingCertificate) throws CertificateEncodingException, CertificateException {
 		this.verifyingCertificate = loadCertificate(verifyingCertificate);
 	}
-	
-	
+
+
 	public void setSigningKeyDER(byte[] signingKey) throws GeneralSecurityException {
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 		KeySpec ks = new PKCS8EncodedKeySpec(signingKey);
-		this.signingKey = (RSAPrivateKey) keyFactory.generatePrivate(ks);	
+		this.signingKey = (RSAPrivateKey) keyFactory.generatePrivate(ks);
 	}
-	
+
 	public void setPortNameSuffix(String portNameSuffix) {
 		this.portNameSuffix = portNameSuffix;
 	}
-	
+
 	protected QName getServiceQName() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	protected <S extends Service> QName getPortQName() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	protected <T> T getWsPort(Class<? extends Service> svcClass, Class<T> seiClass) {
 		T wsPort;
 		try {
@@ -163,7 +163,7 @@ public abstract class AbstractWSSClient  {
 						WSSecUsernameToken usernameToken = new WSSecUsernameToken();
 						usernameToken.setPasswordType(WSConstants.PASSWORD_DIGEST);
 						usernameToken.setUserInfo(sender, password);
-	
+
 						// add wsse:Security and add all sub-elements
 						WSSecHeader secHeader = new WSSecHeader();
 						try {
@@ -174,46 +174,46 @@ public abstract class AbstractWSSClient  {
 						}
 					} else if (signingKey != null) {
 						Crypto crypto = new CryptoBase() {
-							
+
 							@Override
 							public boolean verifyTrust(X509Certificate[] certs, boolean enableRevocation)
 									throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("verifyTrust(certs, enableRevocation)");
 								throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION);
 							}
-							
+
 							@Override
 							public boolean verifyTrust(PublicKey publicKey) throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("verifyTrust(publicKey)");
 								throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION);
 							}
-							
+
 							@Override
 							public boolean verifyTrust(X509Certificate[] certs)
 									throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("verifyTrust(certs)");
 								throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION);
 							}
-							
+
 							@Override
 							public String getX509Identifier(X509Certificate cert)
 									throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("getX509Identifier()");
 								throw new WSSecurityException(WSSecurityException.FAILURE);
 							}
-							
+
 							@Override
 							public X509Certificate[] getX509Certificates(CryptoType cryptoType)
 									throws WSSecurityException {
 								return new X509Certificate[] { signingCertificate } ;
 							}
-							
+
 							@Override
 							public PrivateKey getPrivateKey(String identifier, String password)
 									throws WSSecurityException {
 								return signingKey;
 							}
-							
+
 							@Override
 							public PrivateKey getPrivateKey(X509Certificate certificate,
 									CallbackHandler callbackHandler) throws WSSecurityException {
@@ -221,7 +221,7 @@ public abstract class AbstractWSSClient  {
 								throw new WSSecurityException(WSSecurityException.FAILURE);
 							}
 						};
-						
+
 						WSSecHeader secHeader = new WSSecHeader();
 						try {
 							secHeader.insertSecurityHeader(envelope);
@@ -229,78 +229,90 @@ public abstract class AbstractWSSClient  {
 							ts.build(envelope, secHeader);
 							WSSecSignature sign = new WSSecSignature();
 							sign.setKeyIdentifierType(WSConstants.BST_DIRECT_REFERENCE);
-							
+
 							List<WSEncryptionPart> parts = new ArrayList<WSEncryptionPart>(3);
 				            String soapNamespace = WSSecurityUtil.getSOAPNamespace(envelope.getDocumentElement());
 				            String encMod = "Element"; // "Content"
 							WSEncryptionPart bodyEncPart = new WSEncryptionPart(WSConstants.ELEM_BODY, soapNamespace, encMod);
 							parts.add(bodyEncPart);
-							
+
 							WSEncryptionPart tsEncPart = new WSEncryptionPart(ts.getId(), encMod);
 							parts.add(tsEncPart);
-													
+
 							String[] policyAddrEncParts = { "MessageID", "RelatesTo", "To", "Action", "From", "ReplyTo", "FaultTo" };
-							for (String policyAddrEncPart : policyAddrEncParts){ 
+							for (String policyAddrEncPart : policyAddrEncParts){
 								if (WSSecurityUtil.findElement(envelope, policyAddrEncPart, WS_ADDRESSING_NAMESPACE) != null) {
 									WSEncryptionPart actionEncPart = new WSEncryptionPart(policyAddrEncPart, WS_ADDRESSING_NAMESPACE, encMod);
 									parts.add(actionEncPart);
 								}
 							}
-							
+
 							sign.setParts(parts);
-							
+
 							sign.build(envelope, crypto, secHeader);
 						} catch (WSSecurityException e) {
 							throw new SecurityException(e);
 						}
-						
-					} 
+
+					}
 				} else {
 					if (verifyingCertificate != null) {
 						WSSecurityEngine eng = new WSSecurityEngine();
-						
+
 						Crypto crypto = new CryptoBase() {
-							
+
 							@Override
 							public boolean verifyTrust(X509Certificate[] certs, boolean enableRevocation)
 									throws WSSecurityException {
-								Logger.getLogger(getClass().getName()).warning("verifyTrust(certs, enableRevocation)");
-								throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION);
+								Logger.getLogger(getClass().getName()).fine("verifyTrust(certs, enableRevocation)");
+								try {
+									String verifiedCertThumprint = getThumbprint(verifyingCertificate);
+									for (X509Certificate cert : certs) {
+										String certThumbprint = getThumbprint(cert);
+										Logger.getLogger(getClass().getName()).fine("thumbprint of certificate to verify: " + certThumbprint);
+										if (certThumbprint.equals(verifiedCertThumprint)) {
+											return true;
+										}
+									}
+								} catch (CertificateEncodingException e) {
+									throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION, null, null, e);
+								}
+								return false;
 							}
-							
+
 							@Override
 							public boolean verifyTrust(PublicKey publicKey) throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("verifyTrust(publicKey)");
 								throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION);
 							}
-							
+
 							@Override
 							public boolean verifyTrust(X509Certificate[] certs)
 									throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("verifyTrust(certs)");
 								throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION);
 							}
-							
+
 							@Override
 							public String getX509Identifier(X509Certificate cert)
 									throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("getX509Identifier()");
 								throw new WSSecurityException(WSSecurityException.FAILURE);
 							}
-							
+
 							@Override
 							public X509Certificate[] getX509Certificates(CryptoType cryptoType)
 									throws WSSecurityException {
 								return new X509Certificate[] { verifyingCertificate };
 							}
-							
+
 							@Override
 							public PrivateKey getPrivateKey(String identifier, String password)
 									throws WSSecurityException {
 								Logger.getLogger(getClass().getName()).warning("getPrivateKey(identifier, password)");
 								throw new WSSecurityException(WSSecurityException.FAILURE);
 							}
-							
+
 							@Override
 							public PrivateKey getPrivateKey(X509Certificate certificate,
 									CallbackHandler callbackHandler) throws WSSecurityException {
@@ -308,8 +320,8 @@ public abstract class AbstractWSSClient  {
 								throw new WSSecurityException(WSSecurityException.FAILURE);
 							}
 						};
-						
-						
+
+
 						try {
 							eng.processSecurityHeader(envelope, null, null, crypto);
 						} catch (WSSecurityException e) {
@@ -339,7 +351,7 @@ public abstract class AbstractWSSClient  {
 		};
 		handlers.add(authHandler);
 		// add back handlers (if it was null/empty, it's not attached to the binding)
-		servicePort.getBinding().setHandlerChain(handlers); 
+		servicePort.getBinding().setHandlerChain(handlers);
 	}
 
 }
