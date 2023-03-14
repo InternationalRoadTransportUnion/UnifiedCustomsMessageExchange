@@ -1,6 +1,7 @@
 package org.iru.common.crypto.wscrypto;
 
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -15,8 +16,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.jxpath.JXPathContext;
-import org.apache.commons.jxpath.JXPathException;
 
 public class Encrypter {
 
@@ -45,10 +44,10 @@ public class Encrypter {
 		m.marshal(obj, sw);
 		
 		boolean withHash = true;
-		JXPathContext jxpc = JXPathContext.newContext(obj instanceof JAXBElement ? ((JAXBElement<?>) obj).getValue() : obj);
+		Object objValue = obj instanceof JAXBElement ? ((JAXBElement<?>) obj).getValue() : obj;
 		try {
-			jxpc.getValue(CryptoUtil.ENVELOPE_HASH_JXPATH);
-		} catch (JXPathException e) {
+			CryptoUtil.getEnvelopeHash(objValue);
+		} catch (NoSuchMethodException|IllegalAccessException|IllegalArgumentException|InvocationTargetException e) {
 			withHash = false;
 		}
 		if (withHash) {
@@ -58,7 +57,11 @@ public class Encrypter {
 			if (! pm.matches())
 				new IllegalArgumentException();
 			byte[] hash = DigestUtils.sha1(pm.group(CryptoUtil.BODY_GROUP).getBytes(CryptoUtil.UNICODE_CHARSET));
-			jxpc.setValue(CryptoUtil.ENVELOPE_HASH_JXPATH, hash);		
+			try {
+				CryptoUtil.setEnvelopeHash(objValue, hash);
+			} catch (NoSuchMethodException|IllegalAccessException|IllegalArgumentException|InvocationTargetException e) {
+				throw new IllegalStateException(e);
+			}
 			sw = new StringWriter();
 			m.marshal(obj, sw);
 		}

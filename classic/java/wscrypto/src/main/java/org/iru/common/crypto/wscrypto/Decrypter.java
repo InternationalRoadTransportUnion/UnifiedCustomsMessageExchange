@@ -2,6 +2,7 @@ package org.iru.common.crypto.wscrypto;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.KeyFactory;
@@ -21,8 +22,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.jxpath.JXPathContext;
-import org.apache.commons.jxpath.JXPathException;
 
 public class Decrypter {
 
@@ -66,12 +65,11 @@ public class Decrypter {
 			result = element.getValue();
 		}
 
-	    JXPathContext jxpc = JXPathContext.newContext(result);
-
 	    byte[] responseHash = null;
+	    
 	    try {
-	    	responseHash = (byte[]) jxpc.getValue(CryptoUtil.ENVELOPE_HASH_JXPATH);
-	    } catch (JXPathException e) {
+	    	responseHash = CryptoUtil.getEnvelopeHash(result);
+	    } catch (NoSuchMethodException|IllegalAccessException|IllegalArgumentException|InvocationTargetException e) {
 	    	// silently ignore if no ENVELOPE_HASH exist in class
 	    }
 	    
