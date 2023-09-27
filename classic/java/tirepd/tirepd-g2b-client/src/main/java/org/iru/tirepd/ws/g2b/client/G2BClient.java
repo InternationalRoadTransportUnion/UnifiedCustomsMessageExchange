@@ -5,7 +5,6 @@ import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.GregorianCalendar;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.namespace.QName;
@@ -16,6 +15,8 @@ import org.iru.rts.ws.tirepd_g2b_1.TIREPDG2BService;
 import org.iru.rts.ws.tirepd_g2b_1.TIREPDG2BServiceClassSoap;
 import org.iru.rts.ws.tirepd_g2b_1.TIREPDG2BUploadAck;
 import org.iru.rts.ws.tirepd_g2b_1.TIREPDG2BUploadParams;
+
+import jakarta.xml.bind.JAXBException;
 
 public class G2BClient {
 	

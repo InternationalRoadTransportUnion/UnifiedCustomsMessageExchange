@@ -5,8 +5,6 @@ import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.iru.model.tir_actor_1.Customs;
@@ -25,6 +23,9 @@ import org.iru.rts.safetirupload.RequestReplyRecords;
 import org.iru.rts.safetirupload.TCOType;
 import org.iru.rts.safetirupload.UPGType;
 import org.iru.rtsplus.client.plus.TerminationServiceClientImpl;
+
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
 
 public class UploadClientImpl extends TerminationServiceClientImpl implements UploadClient {
 	

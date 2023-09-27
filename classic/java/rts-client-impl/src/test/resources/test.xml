@@ -56,7 +56,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean id="datatypeFactory" class="javax.xml.datatype.DatatypeFactory" factory-method="newInstance"/>
+	<bean id="datatypeFactory" class="jakarta.xml.datatype.DatatypeFactory" factory-method="newInstance"/>
 	<bean id="xdate" factory-bean="datatypeFactory" factory-method="newXMLGregorianCalendar">
 		<constructor-arg>
 			<bean id="date" class="java.util.GregorianCalendar">

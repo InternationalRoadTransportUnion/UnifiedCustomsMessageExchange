@@ -6,7 +6,7 @@ import java.net.URL;
 import java.security.cert.CertificateException;
 import java.util.Map;
 
-import javax.xml.ws.BindingProvider;
+import jakarta.xml.ws.BindingProvider;
 
 import org.apache.commons.io.FileUtils;
 import org.iru.common.crypto.wscrypto.Encrypter;

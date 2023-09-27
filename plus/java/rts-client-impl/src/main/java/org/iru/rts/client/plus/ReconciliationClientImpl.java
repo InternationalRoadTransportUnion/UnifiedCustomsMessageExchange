@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.iru.rts.client.ReconciliationClient;
@@ -20,6 +19,8 @@ import org.iru.rts.safetirreconciliation.PFDType;
 import org.iru.rts.safetirreconciliation.RequestRecord;
 import org.iru.rts.safetirreconciliation.TCOType;
 import org.iru.rtsplus.client.plus.TerminationServiceClientImpl;
+
+import jakarta.xml.bind.JAXBException;
 
 public class ReconciliationClientImpl extends TerminationServiceClientImpl implements ReconciliationClient {
 

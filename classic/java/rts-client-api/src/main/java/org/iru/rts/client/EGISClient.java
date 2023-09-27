@@ -3,7 +3,7 @@ package org.iru.rts.client;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.stream.XMLStreamException;
 

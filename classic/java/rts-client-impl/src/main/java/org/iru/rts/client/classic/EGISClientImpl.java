@@ -6,7 +6,6 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -31,6 +30,8 @@ import org.iru.rts.safetirupload.Records;
 import org.iru.rts.tchq.tchquery.EnvelopeType;
 import org.iru.rts.ws.egis_1.EGISClass;
 import org.iru.rts.ws.egis_1.EGISClassSoap;
+
+import jakarta.xml.bind.JAXBException;
 
 public class EGISClientImpl extends AbstractQueryClient implements EGISClient {
 

@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.namespace.QName;
-import javax.xml.ws.WebServiceException;
 
 import org.iru.model.tir_actor_1.Customs;
 import org.iru.model.tir_actor_1.IRU;
@@ -40,6 +38,9 @@ import org.iru.rts.safetirupload.RequestReplyRecords;
 import org.iru.rts.safetirupload.TCOType;
 import org.iru.rts.safetirupload.UPGType;
 import org.iru.rtsplus.client.TerminationServiceClient;
+
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.ws.WebServiceException;
 
 public class TerminationServiceClientImpl extends AbstractWSSClient implements TerminationServiceClient {
 

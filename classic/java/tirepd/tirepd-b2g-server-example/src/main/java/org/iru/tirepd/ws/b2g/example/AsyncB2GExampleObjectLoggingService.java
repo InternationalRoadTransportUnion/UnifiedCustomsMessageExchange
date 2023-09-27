@@ -2,12 +2,7 @@ package org.iru.tirepd.ws.b2g.example;
 
 import java.io.StringWriter;
 
-import javax.jws.WebService;
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 
 import org.iru.epd.model.message.envelope.AttachmentType;
@@ -18,6 +13,12 @@ import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadAck;
 import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadParams;
 import org.iru.tirepd.messages.names.NoNamespaceMapper;
 import org.w3c.dom.Element;
+
+import jakarta.jws.WebService;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * AsyncB2GExampleObjectLoggingService is a complete implementation of B2G endpoint,

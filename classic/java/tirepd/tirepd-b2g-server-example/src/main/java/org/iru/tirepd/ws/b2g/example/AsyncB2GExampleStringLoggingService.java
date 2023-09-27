@@ -1,6 +1,6 @@
 package org.iru.tirepd.ws.b2g.example;
 
-import javax.jws.WebService;
+import jakarta.jws.WebService;
 
 import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadAck;
 import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadParams;

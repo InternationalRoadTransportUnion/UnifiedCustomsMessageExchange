@@ -2,10 +2,11 @@ package org.iru.tirepd.ws.g2b.client;
 
 import java.security.GeneralSecurityException;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.iru.tirepd.messages.names.NoNamespaceMapper;
+
+import jakarta.xml.bind.JAXBException;
 
 public class NoNSG2BClient extends G2BClient {
 

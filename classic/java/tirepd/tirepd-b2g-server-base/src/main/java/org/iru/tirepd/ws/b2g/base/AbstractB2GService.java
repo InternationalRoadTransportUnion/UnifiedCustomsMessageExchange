@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
 import org.iru.common.crypto.wscrypto.CipheredData;
@@ -14,6 +13,8 @@ import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadAck;
 import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.xml.bind.JAXBException;
 
 /**
  * AbstractB2GService is the base implementation that knows the details of the

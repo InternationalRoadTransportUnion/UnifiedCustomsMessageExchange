@@ -3,11 +3,6 @@ package org.iru.tirepd.ws.b2g.example;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.annotation.Resource;
-import javax.servlet.ServletContext;
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
-
 import org.apache.commons.io.IOUtils;
 import org.iru.common.crypto.wscrypto.CryptoUtil;
 import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadAck;
@@ -15,6 +10,11 @@ import org.iru.rts.ws.tirepd_b2g_1.TIREPDB2GUploadParams;
 import org.iru.tirepd.ws.b2g.base.AbstractB2GService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.annotation.Resource;
+import jakarta.servlet.ServletContext;
+import jakarta.xml.ws.WebServiceContext;
+import jakarta.xml.ws.handler.MessageContext;
 
 /**
  * AbstractB2GExampleService shows how to create a subclass of AbstractB2GService

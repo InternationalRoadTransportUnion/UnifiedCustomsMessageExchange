@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.util.GregorianCalendar;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -27,6 +26,8 @@ import org.iru.rts.ws.tchq_1.SafeTIRHolderQueryServiceClass;
 import org.iru.rts.ws.tchq_1.SafeTIRHolderQueryServiceClassSoap;
 import org.iru.rts.ws.tchq_1.TIRHolderQuery;
 import org.iru.rts.ws.tchq_1.TIRHolderResponse;
+
+import jakarta.xml.bind.JAXBException;
 
 public class HolderQueryClientImpl extends AbstractQueryClient implements HolderQueryClient {
 

@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
-import javax.xml.ws.Holder;
 
 import org.iru.rts.model.termination_1.ReconciliationRequestRepliesType;
 import org.iru.rts.model.termination_1.ReconciliationRequestType;
@@ -17,6 +16,8 @@ import org.iru.rts.services.terminationservice_1.TerminationService;
 import org.iru.rts.services.terminationservice_1.TerminationServiceSEI;
 import org.iru.rts.services.terminationservice_1.TransmitReconciliationRequestReplies;
 import org.iru.rtsplus.client.TerminationServiceClient;
+
+import jakarta.xml.ws.Holder;
 
 public class TerminationServiceClientImpl extends AbstractWSSClient implements TerminationServiceClient {
 

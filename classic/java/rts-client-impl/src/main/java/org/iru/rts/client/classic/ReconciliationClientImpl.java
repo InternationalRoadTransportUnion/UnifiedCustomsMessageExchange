@@ -5,7 +5,6 @@ import java.security.GeneralSecurityException;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.namespace.QName;
@@ -24,6 +23,8 @@ import org.iru.rts.safetirreconciliation.SafeTIR;
 import org.iru.rts.ws.wsrq_1.ReconciliationQueryServiceClass;
 import org.iru.rts.ws.wsrq_1.ReconciliationQueryServiceClassSoap;
 import org.iru.rts.ws.wsrq_1.ReconciliationResponse;
+
+import jakarta.xml.bind.JAXBException;
 
 public class ReconciliationClientImpl extends AbstractQueryClient implements ReconciliationClient {
 
