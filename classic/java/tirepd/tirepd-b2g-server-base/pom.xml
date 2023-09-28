@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.iru.rts.classic</groupId>
 		<artifactId>tirepd-rts</artifactId>
-		<version>3.0.0-SNAPSHOT</version>
+		<version>3.0.0</version>
 	</parent>
 
         <artifactId>tirepd-b2g-server-base</artifactId>
