@@ -57,6 +57,11 @@ namespace B2G
                 ValidateParams(su, cert.PublicKey.Key.KeySize);
                 return EncryptionHelper.X509DecryptString(su.ESessionKey, su.MessageContent, su.CertificateID, cert);
             }
+            catch (B2GException ex)
+            {
+                Log(ex.Message + "\r\n" + ex.StackTrace, EventLogEntryType.Error);
+                throw;
+            }
             catch (Exception ex)
             {
                 Log(ex.Message, EventLogEntryType.Error);
