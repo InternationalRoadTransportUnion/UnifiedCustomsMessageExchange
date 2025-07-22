@@ -58,7 +58,7 @@ public class UploadClientImpl extends TerminationServiceClientImpl implements Up
 				termination.setPackageCount(safeTIRRecord.getPIC() != null ? safeTIRRecord.getPIC().longValue() : null);
 
 				JAXBElement<TIROperationTerminationType> t;
-				if (UPGType.N.equals(safeTIRRecord.getUPG())) {
+				if (safeTIRRecord.getUPG() == null || UPGType.N.equals(safeTIRRecord.getUPG())) {
 					t = of.createNewTIROperationTermination(termination);
 				} else {
 					t = of.createCancelledTIROperationTermination(termination);
